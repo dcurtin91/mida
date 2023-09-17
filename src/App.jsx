@@ -32,17 +32,14 @@ function App() {
         text: 'ASKING PRICE',
       },
     },
-    tooltip: {
-      custom: function ({ series, seriesIndex, dataPointIndex }) {
-        return `<div>${filteredData[seriesIndex][dataPointIndex].title}</div>`;
-      },
-    },
+    
+    
   });
 
   useEffect(() => {
     fetchDataAndPopulateTable();
   }, []);
-///////
+
   async function fetchDataAndPopulateTable() {
     try {
       const response = await fetch('http://localhost:4000/fetchData');
@@ -55,21 +52,43 @@ function App() {
     }
   }
 
+  // function populateScatterData(dataToUse) {
+  //   const scatterDataArray = dataToUse.map((row) => ({
+  //     x: parseFloat(row['TTM REVENUE']),
+  //     y: parseFloat(row['ASKING PRICE']),
+  //     title: row['Title'],
+  //   }));
+    
+  //   const title = dataToUse.length > 0 ? dataToUse[0]['Title'] : 'Scatter Plot';
+    
+  //   setScatterData({
+  //     series: [
+  //       {
+  //         name: title, 
+  //         data: scatterDataArray,
+  //       },
+  //     ],
+  //   });
+  // }
+
   function populateScatterData(dataToUse) {
-    const scatterDataArray = dataToUse.map((row) => ({
-      x: parseFloat(row['TTM REVENUE']),
-      y: parseFloat(row['ASKING PRICE']),
-      title: row['Title'],
-    }));
-    setScatterData({
-      series: [
+    const seriesData = dataToUse.map((row) => ({
+      name: row['Title'],
+      data: [
         {
-          name: 'Scatter Plot',
-          data: scatterDataArray,
+          x: parseFloat(row['TTM REVENUE']),
+          y: parseFloat(row['ASKING PRICE']),
         },
       ],
+    }));
+    
+    setScatterData({
+      series: seriesData,
     });
   }
+  
+  
+  
 
   function applyFilter() {
     const newData = data.filter(d => {
