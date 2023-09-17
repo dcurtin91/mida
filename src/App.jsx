@@ -42,7 +42,7 @@ function App() {
   useEffect(() => {
     fetchDataAndPopulateTable();
   }, []);
-
+///////
   async function fetchDataAndPopulateTable() {
     try {
       const response = await fetch('http://localhost:4000/fetchData');
