@@ -52,40 +52,25 @@ function App() {
     }
   }
 
-  // function populateScatterData(dataToUse) {
-  //   const scatterDataArray = dataToUse.map((row) => ({
-  //     x: parseFloat(row['TTM REVENUE']),
-  //     y: parseFloat(row['ASKING PRICE']),
-  //     title: row['Title'],
-  //   }));
-    
-  //   const title = dataToUse.length > 0 ? dataToUse[0]['Title'] : 'Scatter Plot';
-    
-  //   setScatterData({
-  //     series: [
-  //       {
-  //         name: title, 
-  //         data: scatterDataArray,
-  //       },
-  //     ],
-  //   });
-  // }
-
   function populateScatterData(dataToUse) {
-    const seriesData = dataToUse.map((row) => ({
-      name: row['Title'],
-      data: [
-        {
-          x: parseFloat(row['TTM REVENUE']),
-          y: parseFloat(row['ASKING PRICE']),
-        },
-      ],
+    const scatterDataArray = dataToUse.map((row) => ({
+      x: parseFloat(row['TTM REVENUE']),
+      y: parseFloat(row['ASKING PRICE']),
+      title: row['Title'],
     }));
     
+    const title = dataToUse.length > 0 ? dataToUse[0]['Title'] : 'Scatter Plot';
+    
     setScatterData({
-      series: seriesData,
+      series: [
+        {
+          name: title, 
+          data: scatterDataArray,
+        },
+      ],
     });
   }
+
   
   
   
