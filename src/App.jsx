@@ -4,18 +4,41 @@ import ReactApexChart from 'react-apexcharts';
 function App() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [askingPriceRange, setAskingPriceRange] = useState({ min: 0, max: Infinity });
-  const [scatterData, setScatterData] = useState({
-    series: [
-      {
-        name: 'Scatter Plot',
-        data: [],
-      },
-    ],
-  });
-  const [scatterOptions, setScatterOptions] = useState({
+  const [askingPriceRange, setAskingPriceRange] = useState({ min: 0, max: 99999999 });
+  const [scatterData, setScatterData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = 'http://localhost:4000/fetchData';
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        setData(data);
+        setFilteredData(data);
+        setScatterData(data.map((item) => ({
+          x: item.TTM_REVENUE,
+          y: item.ASKING_PRICE,
+          ID: item.ID,
+          Title: item.Title, 
+        })));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const series = [
+    {
+      name: 'Scatter Plot',
+      data: scatterData,
+    },
+  ];
+
+  const options = {
     chart: {
-      height: "100%",
+      height: '100%',
       type: 'scatter',
       zoom: {
         enabled: true,
@@ -33,43 +56,12 @@ function App() {
       },
     },
     tooltip: {
-      custom: function ({ series, seriesIndex, dataPointIndex }) {
-        return `<div>${filteredData[seriesIndex][dataPointIndex].title}</div>`;
+      custom: function ({ seriesIndex, dataPointIndex }) {
+        const title = scatterData[dataPointIndex].Title;
+        return `<div>${title}</div>`;
       },
     },
-  });
-
-  useEffect(() => {
-    fetchDataAndPopulateTable();
-  }, []);
-///////
-  async function fetchDataAndPopulateTable() {
-    try {
-      const response = await fetch('http://localhost:4000/fetchData');
-      const responseData = await response.json();
-      setData(responseData);
-      setFilteredData(responseData);
-      populateScatterData(responseData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }
-
-  function populateScatterData(dataToUse) {
-    const scatterDataArray = dataToUse.map((row) => ({
-      x: parseFloat(row['TTM REVENUE']),
-      y: parseFloat(row['ASKING PRICE']),
-      title: row['Title'],
-    }));
-    setScatterData({
-      series: [
-        {
-          name: 'Scatter Plot',
-          data: scatterDataArray,
-        },
-      ],
-    });
-  }
+  };
 
   function applyFilter() {
     const newData = data.filter(d => {
@@ -77,7 +69,12 @@ function App() {
       return askingPrice >= askingPriceRange.min && askingPrice <= askingPriceRange.max;
     });
     setFilteredData(newData);
-    populateScatterData(newData);
+    setScatterData(newData.map((item) => ({
+      x: item.TTM_REVENUE,
+      y: item.ASKING_PRICE,
+      ID: item.ID,
+      Title: item.Title, 
+    })));
   }
 
   return (
@@ -101,7 +98,7 @@ function App() {
       </div>
       
       <div id="chart">
-        <ReactApexChart options={scatterOptions} series={scatterData.series} type="scatter" height={550} />
+        <ReactApexChart options={options} series={series} type="scatter" height={550} />
       </div>
     </div>
   );
