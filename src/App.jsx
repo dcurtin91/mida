@@ -46,11 +46,13 @@ function App() {
       },
     },
     xaxis: {
+      tickAmount: 3,
       title: {
         text: 'TTM REVENUE',
       },
     },
     yaxis: {
+      max: 2000000,
       title: {
         text: 'ASKING PRICE',
       },
