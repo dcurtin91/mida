@@ -46,15 +46,28 @@ function App() {
       },
     },
     xaxis: {
-      tickAmount: 3,
+      type: 'numeric',
+    min: 0,
+    max: 1000000,
+    tickAmount: 5,
       title: {
         text: 'TTM REVENUE',
       },
+      labels: {
+        formatter: function (value) {
+          return "$" + value.toLocaleString();
+        }
+      },
     },
     yaxis: {
-      max: 2000000,
+      max: 800000,
       title: {
         text: 'ASKING PRICE',
+      },
+      labels: {
+        formatter: function (value) {
+          return "$" + value.toLocaleString();
+        }
       },
     },
     tooltip: {
