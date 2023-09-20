@@ -67,3 +67,11 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+#chartContainer .apexcharts-tooltip {
+  color: #000000;
+}
+
+#chartContainer .apexcharts-tooltip .apexcharts-tooltip-series-group.active {
+  background: #153ec2 !important;
+}

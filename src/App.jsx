@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
+import './App.css';
 
 function App() {
   const [data, setData] = useState([]);
@@ -20,6 +21,12 @@ function App() {
           y: item.ASKING_PRICE,
           ID: item.ID,
           Title: item.Title, 
+          Under_Offer: item.Under_Offer,
+          TTM_PROFIT: item.TTM_PROFIT,
+          Description: item.Description,
+          Date_Founded: item.Date_Founded,
+          Team_Size: item.Team_Size,
+          BUSINESS_MODEL: item.BUSINESS_MODEL,
         })));
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -71,10 +78,37 @@ function App() {
       },
     },
     tooltip: {
-      custom: function ({ seriesIndex, dataPointIndex }) {
+      onDatasetHover: {
+        highlightDataSeries: true,
+    },
+      custom: function ({ dataPointIndex }) {
         const title = scatterData[dataPointIndex].Title;
-        return `<div>${title}</div>`;
+        const offer = scatterData[dataPointIndex].Under_Offer;
+        const ttmrev = numberWithCommas(scatterData[dataPointIndex].x);
+        const ttmprofit = numberWithCommas(scatterData[dataPointIndex].TTM_PROFIT);
+        const price = numberWithCommas(scatterData[dataPointIndex].y);
+        const description = scatterData[dataPointIndex].Description;
+        const date = scatterData[dataPointIndex].Date_Founded;
+        const team = scatterData[dataPointIndex].Team_Size;
+        const model = scatterData[dataPointIndex].BUSINESS_MODEL;
+
+        function numberWithCommas(x) {
+          return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
+        return `<div>Title: ${title}</div>
+                <div>Under Offer: ${offer}</div>
+                <div>TTM Revenue: $${ttmrev}</div>
+                <div>TTM Profit: $${ttmprofit}</div>
+                <div>Price: $${price}</div>
+                <div>Description: ${description}</div>
+                <div>Date Founded: ${date}</div>
+                <div>Team Size: ${team}</div>
+                <div>Business Model: ${model}</div>`;
       },
+      fixed: {
+        enabled: true,
+        position: 'topRight',
+    },
     },
   };
 
