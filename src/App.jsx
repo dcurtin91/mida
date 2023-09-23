@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import './App.css';
+import Card from "react-bootstrap/Card";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function App() {
   const [data, setData] = useState([]);
@@ -183,9 +186,8 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div>
       <h1>MiDA</h1>
-      
       <div>
         <input 
           type="number" 
@@ -201,24 +203,61 @@ function App() {
         />
         <button onClick={applyFilter}>Apply Filter</button>
       </div>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
       
-      <div id="chart">
-        <ReactApexChart options={options} series={series} type="scatter" height={550} />
-      </div>
-      <div>
+      
+      <Card id="chart"
+        style={{
+          display: "flex",
+          flex: 3
+        }}
+      ><Row>
+      <Col
+        style={{
+          //justifyContent: "center",
+          //textAlign: "center",
+        }}
+      >
+        <ReactApexChart options={options} series={series} type="scatter" height={550} width ={950}/>
+      </Col>
+      </Row>
+      </Card>
+      <Card id = "info"
+        style={{
+          border: "1px solid black",
+          color: "white",
+          backgroundColor: "#144696",
+          display: "flex",
+          flex: 1
+        }}
+      >
+        <Row>
+          <Col
+            style={{
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
         <div>{title}</div>
-        <div>{offer}</div>
-        <div>{ttmrev}</div>
-        <div>{ttmprofit}</div>
-        <div>{price}</div>
+        <div>Under Offer: {offer}</div>
+        <div>TTM Revenue: {ttmrev}</div>
+        <div>TTM Profit: {ttmprofit}</div>
+        <div>Asking Price: {price}</div>
         <div>{description}</div>
-        <div>{date}</div>
-        <div>{team}</div>
-        <div>{model}</div>
-        <div>{tech}</div>
-        <div>{competitors}</div>
-        <div>{growth}</div>
-        <div>{reasoning}</div>
+        <div>Date Founded: {date}</div>
+        <div>Team Size: {team}</div>
+        <div>Business Model: {model}</div>
+        <div>Tech Stack {tech}</div>
+        <div>Competitors: {competitors}</div>
+        <div>Growth Opportunity: {growth}</div>
+        <div>Selling Reasoning: {reasoning}</div>
         <div>Financing: {financing}</div>
         <div>TTM Gross Revenue: ${gross}</div>
         <div>TTM Net Profit: ${net}</div>
@@ -227,9 +266,11 @@ function App() {
         <div>Customers: {customers}</div>
         <div>Annual Recurring Revenue: ${arr}</div>
         <div>Annual Growth Rate: ${agr}</div>
-      
-        </div>
-    </div>
+        </Col>
+            </Row>
+        </Card>
+  </div>
+  </div>
   );
 }
 
