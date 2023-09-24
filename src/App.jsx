@@ -156,7 +156,7 @@ function App() {
         setLmgross(lmgross);
         const lmnet = numberWithCommas(scatterData[dataPointIndex].Last_months_net_profit);
         setLmnet(lmnet);
-        const customers = scatterData[dataPointIndex].Customers;
+        const customers = numberWithCommas(scatterData[dataPointIndex].Customers);
         setCustomers(customers);
         const arr = numberWithCommas(scatterData[dataPointIndex].Annual_recurring_revenue);
         setArr(arr);
@@ -207,7 +207,7 @@ function App() {
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        //justifyContent: "center",
         height: "100vh",
       }}
     >
@@ -235,37 +235,52 @@ function App() {
           color: "white",
           backgroundColor: "#144696",
           display: "flex",
+          overflowY: "auto",
+          maxHeight: "700px",
           flex: 1
         }}
       >
         <Row>
           <Col
             style={{
-              justifyContent: "center",
-              textAlign: "center",
+              fontSize: "12px",
+              textAlign: "left"
             }}
           >
-        <div>{title}</div>
-        <div>Under Offer: {offer}</div>
-        <div>TTM Revenue: {ttmrev}</div>
-        <div>TTM Profit: {ttmprofit}</div>
-        <div>Asking Price: {price}</div>
-        <div>{description}</div>
-        <div>Date Founded: {date}</div>
-        <div>Team Size: {team}</div>
-        <div>Business Model: {model}</div>
-        <div>Tech Stack {tech}</div>
-        <div>Competitors: {competitors}</div>
-        <div>Growth Opportunity: {growth}</div>
-        <div>Selling Reasoning: {reasoning}</div>
-        <div>Financing: {financing}</div>
-        <div>TTM Gross Revenue: ${gross}</div>
-        <div>TTM Net Profit: ${net}</div>
-        <div>Last Month's Gross Revenue: ${lmgross}</div>
-        <div>Last Month's Net Profit: ${lmnet}</div>
-        <div>Customers: {customers}</div>
-        <div>Annual Recurring Revenue: ${arr}</div>
-        <div>Annual Growth Rate: ${agr}</div>
+        <h2>{title}</h2>
+        <div><strong>Under Offer: </strong>{offer}</div>
+        <div><strong>TTM Revenue: </strong>${ttmrev}</div>
+        <div><strong>TTM Profit: </strong>${ttmprofit}</div>
+        <div><strong>Asking Price: </strong>${price}</div>
+        <div style={{
+              marginTop: "12px",
+              marginBottom: "12px"
+            }}>{description}</div>
+        <div><strong>Date Founded: </strong>{date}</div>
+        <div><strong>Team Size: </strong>{team}</div>
+        <div style={{
+              marginTop: "12px",
+              marginBottom: "12px"
+            }}><strong>Business Model: </strong>{model}</div>
+        <div><strong>Tech Stack </strong>{tech}</div>
+        <div><strong>Competitors: </strong>{competitors}</div>
+        <div style={{
+              marginTop: "12px",
+              marginBottom: "12px"
+            }}><strong>Growth Opportunity: </strong>{growth}</div>
+        <div style={{
+              marginTop: "12px",
+              marginBottom: "12px"
+            }}><strong>Selling Reasoning: </strong>{reasoning}</div>
+        <div style={{
+              marginBottom: "12px"}}><strong>Financing: </strong>{financing}</div>
+        <div><strong>TTM Gross Revenue: </strong>${gross}</div>
+        <div><strong>TTM Net Profit: </strong>${net}</div>
+        <div><strong>Last Month's Gross Revenue: </strong>${lmgross}</div>
+        <div><strong>Last Month's Net Profit: </strong>${lmnet}</div>
+        <div><strong>Customers: </strong>{customers}</div>
+        <div><strong>Annual Recurring Revenue: </strong>${arr}</div>
+        <div><strong>Annual Growth Rate: </strong>{agr}</div>
         </Col>
             </Row>
         </Card>
